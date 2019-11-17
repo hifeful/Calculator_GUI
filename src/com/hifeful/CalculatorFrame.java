@@ -164,7 +164,8 @@ public class CalculatorFrame extends JFrame {
                         valueResultStr = valueResultStr.substring(0, valueResultStr.length()-1);
                         valueResult.setText(valueResultStr);
 
-                        values.set(valuesCounter, Double.parseDouble(valueResultStr));
+                        if (!valueResultStr.contentEquals("-"))
+                            values.set(valuesCounter, Double.parseDouble(valueResultStr));
                     }
                     else
                     {
