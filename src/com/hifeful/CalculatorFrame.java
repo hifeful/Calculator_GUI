@@ -71,10 +71,12 @@ public class CalculatorFrame extends JFrame {
 
         textFields = new JPanel(new GridLayout(2, 1));
         expression = new JTextField(expressionStr,30);
+        expression.setHorizontalAlignment(JTextField.RIGHT);
         expression.setEditable(false);
         expression.setFont(new Font("Times New Roman", Font.BOLD, 18));
         textFields.add(expression);
         valueResult = new JTextField(valueResultStr,30);
+        valueResult.setHorizontalAlignment(JTextField.RIGHT);
         valueResult.setEditable(false);
         valueResult.setFont(new Font("Times New Roman", Font.BOLD, 18));
         textFields.add(valueResult);
@@ -103,22 +105,25 @@ public class CalculatorFrame extends JFrame {
                     int finalI = i;
                     buttons[i].addActionListener(event ->
                     {
-                        if (!sign)
+                        if (!equal)
                         {
-                            valueResultStr += buttonsChars[finalI];
-                            valueResult.setText(valueResultStr);
+                            if (!sign)
+                            {
+                                valueResultStr += buttonsChars[finalI];
+                                valueResult.setText(valueResultStr);
 
-                            values.set(valuesCounter, Double.parseDouble(valueResultStr));
-                        }
-                        else
-                        {
-                            valueResultStr = "";
-                            valueResultStr += buttonsChars[finalI];
-                            valueResult.setText(valueResultStr);
+                                values.set(valuesCounter, Double.parseDouble(valueResultStr));
+                            }
+                            else
+                            {
+                                valueResultStr = "";
+                                valueResultStr += buttonsChars[finalI];
+                                valueResult.setText(valueResultStr);
 
-                            values.set(valuesCounter, Double.parseDouble(valueResultStr));
+                                values.set(valuesCounter, Double.parseDouble(valueResultStr));
 
-                            sign = false;
+                                sign = false;
+                            }
                         }
                     });
                 }
@@ -204,9 +209,19 @@ public class CalculatorFrame extends JFrame {
                 {
                     if (!dot)
                     {
-                        valueResultStr = valueResultStr + ".";
-                        valueResult.setText(valueResultStr);
-                        dot = true;
+                        if (sign)
+                        {
+                            valueResultStr = "0"+".";
+                            valueResult.setText(valueResultStr);
+                            sign = false;
+                            dot = true;
+                        }
+                        else
+                        {
+                            valueResultStr = valueResultStr + ".";
+                            valueResult.setText(valueResultStr);
+                            dot = true;
+                        }
                     }
                 });
             }
